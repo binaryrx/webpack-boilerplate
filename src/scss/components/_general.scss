@@ -1,0 +1,21 @@
+.desktop {
+    @media #{$mq-sm} {
+        display: none;
+    }
+}
+.mobile {
+    @media #{$mq-md}, #{$mq-lg} {
+        display: none;
+    }
+}
+
+footer {
+    @media #{$mq-md},#{$mq-lg} {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+    @media #{$mq-sm} {
+        padding: 3rem 2.5rem;
+        font-size: 1.35rem;
+    }
+}

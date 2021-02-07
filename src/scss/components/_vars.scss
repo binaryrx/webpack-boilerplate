@@ -1,0 +1,18 @@
+$bp-sm: 550px; //800g
+$bp-md: 1366px;
+$bp-md-1440: 1440px;
+$text-blue: #1b3c8b;
+
+//welcome
+$title-color: #1b3c8b;
+$subtitle-color: #2e2c42;
+
+$mq-sm: "(max-width: 600px)";
+$mq-md: "(min-width: 601px) and (max-width: 1000px)";
+$mq-lg: "(min-width: 1001px)";
+
+//font-sizes
+$mq-sm-font-size: #{14.5 * 100 / 640}vw;
+$mq-md-font-size: calc(0.5em + 0.5vmin);
+$mq-md-1440-font-size: calc(0.7em + 0.15vmin);
+$mq-lg-font-size: calc(0.9em + 0.15vmin);

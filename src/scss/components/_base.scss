@@ -1,0 +1,48 @@
+*,
+*::after,
+**:before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    color: #000101;
+    font-family: helvetica, sans-serif;
+    scroll-behavior: smooth;
+    background-color: white;
+    overflow-x: hidden;
+
+    @media screen and (min-width: $bp-md-1440) {
+        font-size: $mq-lg-font-size;
+    }
+    @media screen and (max-width: $bp-md-1440) {
+        font-size: $mq-md-1440-font-size;
+    }
+    @media screen and (max-width: $bp-md) {
+        font-size: $mq-md-font-size;
+    }
+    @media screen and (max-width: $bp-sm) {
+        font-size: $mq-sm-font-size;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+}
+
+button a {
+    border: none;
+    outline: none;
+    appearance: none;
+}
