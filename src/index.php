@@ -11,7 +11,7 @@
 
     <body>
         <main>
-            <h1>HTML BOILERPLATE</h1>
+            <h1><?php echo "Hi from PHP"?></h1>
         </main>
     </body>
 </html>

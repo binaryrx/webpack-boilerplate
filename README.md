@@ -68,6 +68,7 @@ cd dist && http-server
 - [`node-sass`](https://github.com/sass/node-sass) - Node Sass
 - [`css-loader`](https://webpack.js.org/loaders/css-loader/) - Resolve CSS imports
 - [`style-loader`](https://webpack.js.org/loaders/style-loader/) - Inject CSS into the DOM
+- [`postcss-loader`](https://webpack.js.org/loaders/style-loader/) -  Process CSS with PostCSS
 
 ### Plugins
 
@@ -76,6 +77,8 @@ cd dist && http-server
 - [`html-webpack-plugin`](https://github.com/jantimon/html-webpack-plugin) - Generate HTML files from template
 - [`mini-css-extract-plugin`](https://github.com/webpack-contrib/mini-css-extract-plugin) - Extract CSS into separate files
 - [`css-minimizer-webpack-plugin`](https://webpack.js.org/plugins/css-minimizer-webpack-plugin/) - Optimize and minimize CSS assets
+- [`Chokidar `](https://github.com/paulmillr/chokidar) - file watching library for PHP
+- [`autoprefixer `](https://github.com/paulmillr/chokidar) - autoprefix css
 
 ### Linters
 
