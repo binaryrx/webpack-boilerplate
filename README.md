@@ -1,8 +1,8 @@
-# 📦 webpack Boilerplate
+# 📦 Webpack Boilerplate
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
- webpack 5 boilerplate using Babel and Sass with a hot dev server and an optimized production build.
+ webpack 5 php boilerplate using Babel and Sass with a hot dev server and an optimized production build.
 
 ## Installation
 
