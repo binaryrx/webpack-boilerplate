@@ -1,77 +1,61 @@
 /* eslint-disable global-require */
 const path = require("path");
-const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyWebpackPlugin  = require("copy-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const PrettierPlugin = require("prettier-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
-const chokidar = require("chokidar");
 
-module.exports = (env,argv) => {
+module.exports = (env, argv) => {
     const { mode } = argv;
-
     require("dotenv").config({ path: path.resolve(__dirname, `.env.${mode}`) });
-    const myEnv = {};
-
-    // eslint-disable-next-line no-restricted-syntax
-    for(const p in process.env) {
-        if(/^MY_APP_/.test(p)) {
-            myEnv[p] = JSON.stringify(process.env[p]);
-        }
-    }
 
     return {
         entry: "./src/index.js",
 
         output: {
             path: path.resolve(__dirname, "dist"),
-            filename: "main.[contenthash].js",
+            publicPath: "/",
+            filename: "js/main.[contenthash].js",
         },
 
         mode: "development",
 
         devtool: mode === "development" && "eval-source-map",
-        
+
         devServer: {
-            before(app,server){
-                chokidar.watch([
-                    "./**/*.php",
-                    "./*.php",
-                ],{
-                    ignoreInitial: true
-                }).on("all",() => {
-                    server.sockWrite(server.sockets, "content-changed");
-                });
-            },
             host: process.env.DEV_SERVER_HOST || "localhost",
-            port: process.env.DEV_SERVER_PORT,
+            port: 7000,
+            // public: "http://localhost:7000",
+            // disableHostCheck: true,
+            // public: myEnv.public || "http://localhost:7000",
             overlay: {
                 errors: true,
                 warnings: false
             },
-            open: process.env.DEV_SERVER_OPEN || false,
+            // proxy: {
+            //     "*": {
+            //         target: "http:localhost:7000",
+            //         secure: false,
+            //         changeOrigin: true,
+            //         autoRewrite: true,
+            //         headers: {
+            //             'X-ProxiedBy-Webpack': true,
+            //         },
+            //     }
+            // },
+            // open: process.env.DEV_SERVER_OPEN || false,
             writeToDisk: true,
-            proxy: {
-                "*": {
-                    target: process.env.DEV_SERVER_PROXY_TARGET,
-                    secure: false,
-                    changeOrigin: true,
-                    autoRewrite: process.env.DEV_SERVER_PROXY_REWRITE,
-                    headers: {
-                        "X-ProxiedBy-Webpack": true,
-                    },
-                }
-            }
         },
 
         resolve: {
-            extensions: ["*", ".js", ".jsx"],
             alias: {
-                "#": path.resolve(__dirname, "src")
-            }
+                "@root": path.resolve(__dirname, "src"),
+                "@Components": path.resolve(__dirname, "src/Components")
+            },
+            extensions: [".js", ".jsx", ".css", ".scss"]
         },
 
         module: {
@@ -93,11 +77,11 @@ module.exports = (env,argv) => {
                             options: {
                                 publicPath: "../"
                             }
-                        },  
+                        },
                         "css-loader", // 3. turn css into CommonJs
                         "sass-loader", // 2. Turn scss into Css
                         "postcss-loader" // 1. prefix scss 
-                        
+
                     ]
                 },
                 //  config for images
@@ -120,7 +104,7 @@ module.exports = (env,argv) => {
                             loader: "file-loader",
                             options: {
                                 name: "[path][name].[ext]"
-                            } 
+                            }
                         }
                     ]
                 },
@@ -130,7 +114,7 @@ module.exports = (env,argv) => {
                     exclude: /images/,
                     use: [
                         {
-                            loader: "file-loader", 
+                            loader: "file-loader",
                             options: {
                                 name: "[name].[ext]",
                                 outputPath: "fonts",
@@ -149,15 +133,14 @@ module.exports = (env,argv) => {
         },
 
         plugins: [
-            new webpack.DefinePlugin(myEnv),
 
             new CleanWebpackPlugin({
                 cleanOnceBeforeBuildPatterns: ["*.*", "css/*.*", "js/*.*", "fonts/*.*", "images/*.*"]
             }),
 
-            new CopyWebpackPlugin ({
+            new CopyWebpackPlugin({
                 patterns: [
-                    { 
+                    {
                         from: path.resolve(__dirname, "src/assets/images/"),
                         to: path.resolve(__dirname, "dist/images/"),
                         globOptions: {
@@ -165,7 +148,7 @@ module.exports = (env,argv) => {
                         },
                         noErrorOnMissing: true,
                     },
-                    { 
+                    {
                         from: path.resolve(__dirname, "src/assets/videos/"),
                         to: path.resolve(__dirname, "dist/videos/"),
                         globOptions: {
@@ -173,7 +156,7 @@ module.exports = (env,argv) => {
                         },
                         noErrorOnMissing: true,
                     },
-                    { 
+                    {
                         from: path.resolve(__dirname, "src/assets/fonts/"),
                         to: path.resolve(__dirname, "dist/fonts/"),
                         globOptions: {
@@ -185,8 +168,7 @@ module.exports = (env,argv) => {
             }),
 
             new HtmlWebpackPlugin({
-                template: "./src/index.php",
-                filename: "index.php"
+                template: "./src/index.html",
             }),
 
             new MiniCssExtractPlugin({
@@ -197,8 +179,10 @@ module.exports = (env,argv) => {
             new ESLintPlugin({
                 files: [".", "src", "config"],
                 formatter: "table",
+                emitWarning: true,
+                failOnError: false
             }),
-        
+
             // Prettier configuration
             new PrettierPlugin(),
             
