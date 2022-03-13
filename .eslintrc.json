@@ -28,7 +28,7 @@
       "no-new-wrappers": "error",
       "no-nested-ternary": "error",
       "no-console": [
-        "warn",
+        "off",
         {
           "allow": ["warn"]
         }

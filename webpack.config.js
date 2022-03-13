@@ -31,10 +31,7 @@ module.exports = (env, argv) => {
             // public: "http://localhost:7000",
             // disableHostCheck: true,
             // public: myEnv.public || "http://localhost:7000",
-            overlay: {
-                errors: true,
-                warnings: false
-            },
+           
             // proxy: {
             //     "*": {
             //         target: "http:localhost:7000",
@@ -47,7 +44,13 @@ module.exports = (env, argv) => {
             //     }
             // },
             // open: process.env.DEV_SERVER_OPEN || false,
-            writeToDisk: true,
+            devMiddleware: {
+                writeToDisk: true,
+                // overlay: {
+                //     errors: true,
+                //     warnings: false
+                // },
+            },
         },
 
         resolve: {
